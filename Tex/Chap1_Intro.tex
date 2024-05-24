@@ -1,0 +1,141 @@
+\chapter{研究背景}
+\section{量子多体系统的“指数墙”问题}
+在 1998 年的 Nobel Lecture 上，因发展了密度泛函理论而获得当年诺贝尔化学奖的 H. Kohn 指出, 在实际求解多电子体系的问题时，人们在信息存储和数值计算层面都会遇到所谓的 "指数墙" 问题\cite{Kohn1999}。
+
+在数据存储层面，以金刚石结构为例。元胞中包含两个不等价碳原子，每个原子有四个价电子，如果将空间划分为 $\Delta x\sim 0.1$ 的网格用于存储电子信息，那么仅仅计算一个金刚石元胞，计算机就需要存储 $(10000)^8\sim 10^{32}~\text{bytes}$ 的数据。对于原子数量高达 $10^{23}$ 量级的实际固体材料而言，现有计算机无法处理如此海量的电子信息。
+
+在数值计算层面也存在类似问题，下面举例简要说明。多电子体系的精确哈密顿量为
+\begin{equation}
+    \hat{H}=\hat{T}_{\text{n}}+\hat{T}_{\text{e}}+\hat{U}_{\text{n-n}}+\hat{U}_{\text{e-e}}+\hat{U}_{\text{n-e}},
+\end{equation}
+其中五项分别为
+\begin{equation}
+    \left\{
+        \begin{aligned}
+            &\hat{T}_{\text{n}}=\sum_{\alpha}-\frac{1}{2M_{\alpha}}\nabla_\alpha^2,\quad &\text{原子核动能项,}\\
+            &\hat{T}_{\text{e}}=\sum_i -\frac{1}{2}\nabla_i^2,&\text{电子动能项,}\\
+            &\hat{U}_{\text{n}-\text{n}}=\sum_{\alpha<\beta}\frac{Z_{\alpha}Z_{\beta}}{\left| R_{\alpha}-R_{\beta} \right|},&\text{核-核相互作用项},\\
+            &\hat{U}_{\text{e-e}}=\sum_{i<j}\frac{1}{\left| r_i-r_j \right|},&\text{电子-电子相互作用项},\\
+            &\hat{U}_{\text{n-e}}=\sum_{\alpha i}\frac{-Z_\alpha}{\left| R_\alpha-r_i \right|},&\text{核-电子相互作用项}.
+        \end{aligned}\right.
+\end{equation}
+以水分子为例， 如果保留哈密顿量中的所有项，单个水分子含有三个原子核和十个电子，相互作用项将存在 $C_{13}^2=\frac{13\times 12}{2\times 1}=78$ 项，两个相互作用的水分子就有 $C_{26}^2=\frac{26\times 25}{2\times 1}=325$ 项。当考虑到实际 $10^{23}$ 量级的宏观系统时，相互作用项将指数级增加，多电子体系再一次成为一个难以处理的问题。
+
+为了跨越“指数墙”问题，人们自量子力学框架建立以来，结合实际问题不断提出各种近似方法，探索处理多电子问题的可能途径。下面简要介绍一些重要的近似方法，这些近似虽然有各自的优缺点和局限性，但正是人们持续的尝试与探索，构建起了第一性原理计算的基础。
+\section{波恩-奥本海默近似}
+波恩-奥本海默近似（Born-Oppenheimer Approximation）的理论基础是原子核的质量 $M$ 比电子质量大三个数量级以上，因此电子与核之间的耦合可以分开\cite{born1927quantum}。当原子核位移时，电子会迅速调整到新的状态，亦即核的运动与电子的运动是相对独立的。因此可以将电子运动受原子核运动的影响作为微扰处理。这种近似方法考虑了当原子核位移时，电子会迅速调整到新的状态，即电子的初态是 $|\psi(0)\rangle=|m(0)\rangle$ 是本征态，则 $t>0$ 时刻电子将保持在相应的瞬时本征态 $|m(t)\rangle$ 上，与量子绝热定理一致，因此也称为\textbf{绝热近似}\cite{Born1928BeweisDA}。
+
+然而，在波恩-奥本海默近似下，多电子系统的总电子数仍然是一个大到难以处理的量，这使得精确求解一个量子多体问题仍然十分困难。因此，人们仍需要进一步寻找近似方法。
+
+\section{哈特利方法}
+1927 年哈特利（Hartree）提出一种称为自洽场（self-consistent field）的方法，用于近似计算原子和离子的近似波函数与能量\cite{hartree_1928}。在这一方法中， Hartree 尝试脱离经验参数，直接从最基本的物理原理出发求解不含时多体薛定谔方程，这就是人们常说的从头计算（\textit{ab initio} calculation）方法。但在当时，人们并没有理解这一方法理念，质疑 Hartree 的方法与多体薛定谔方程之间的关系不明确，包含了一些经验主义方法。后来 J. Slater 和 J. Gaunt 各自独立证明了，利用变分原理，Hartree 方法能够应用在作为单粒子波函数直积的试探波函数上\cite{PhysRev.32.339, gaunt_1928}。这为 Hartree 方法提供了更完善的理论框架。
+
+Hartree 所做的近似方法如下。考虑某个电子运动时，它与其他电子的相互作用的运动可以近似看成是它在其他电子的平均密度所产生的电磁场中的运动，这样就得到了一个平均场近似。
+
+假定对第 $i$ 个电子而言，它感受到的其他电子的平均场为 $\hat{g}_i(r)$ ，则库伦相互作用势可以简化为：
+\begin{equation}
+\hat{U}_{ee}\approx\sum_{i=1}\hat{g}_i(r),
+\end{equation}
+那么电子的哈密顿量可以写作：
+\begin{equation}
+\hat{H}\approx\sum_{i=1}\left(-\frac{1}{2}\nabla_i^2+\hat{v}_i+\hat{g}_i\right)\equiv\sum_{i=1}\hat{H}_i.
+\end{equation}
+这样，整个哈密顿量在平均场近似下就可以分离变量，多电子的薛定谔方程可以化简为 $N$ 个单电子薛定谔方程：
+\begin{equation}
+\hat{H}_i\phi_n(r_i)=\epsilon_n\phi_n(r_i),\quad \Psi(\{r_i\})=\prod_i \phi_i(r_i).
+\end{equation}
+相应的能量平均值是：
+\begin{equation}
+\begin{aligned}
+\langle\hat{H} \rangle_{\mathrm{Hatree}}=&\langle\Psi(\{r_i\})|\left(\sum_{i=1}\hat{h}_i+\hat{U}_{e-e} \right)\\
+=&\sum_{i=1}\langle\phi_i(r)|\hat{h}_i|\phi_i(r)\rangle+\frac{1}{2}\sum_{i\ne j}\langle\phi_i(r)\phi_j(r')\Big|\frac{1}{|r-r'|}\Big|\phi_i(r)\phi_j(r')\rangle.
+\end{aligned}
+\end{equation}
+构造一个总能量附加波函数归一化条件的泛函，泛函对$\langle \phi_i(r)|$取变分极小：
+\begin{equation}
+\delta\left[ \langle\hat{H}\rangle_{\mathrm{Hatree}} -\sum_i E_i \left( \langle\phi_i|\phi_i\rangle-1\right)\right]=0,
+\end{equation}
+带入 $\langle\hat{H}\rangle_{\mathrm{Hatree}}$ 具体表达式，得到：
+\begin{equation}
+\sum_{i=1}\langle\delta \phi_i(r)|\hat{h}_i|\phi_i(r) \rangle+\sum_{i\ne j}\langle\delta \phi_i(r)\phi_j(r')\Big|\frac{1}{|r-r'|} \Big|\phi_i(r)\phi_j(r') \rangle-\sum_iE_i\left(\langle\delta\phi_i(r)|\phi_i(r) \rangle \right)=0,
+\end{equation}
+上式相当于是遍历 $i$ 的 $N$ 个独立方程（取消对 $i$ 的求和）：
+\begin{equation}
+\langle\delta \phi_i(r)|\hat{h}_i|\phi_i(r) \rangle+\sum_{j(\ne i)}\langle\delta \phi_i(r)\phi_j(r')\Big|\frac{1}{|r-r'|} \Big|\phi_i(r)\phi_j(r') \rangle-E_i\left(\langle\delta\phi_i(r)|\phi_i(r) \rangle \right)=0,
+\end{equation}
+整理得到：
+\begin{equation}
+\left\langle\delta\phi_i(r)\left|\left\{\hat{h}_i+\sum_{j(\ne i)}\langle\phi_j(r')|\frac{1}{|r-r'|}|\phi_j(r') \rangle-E_i \right\} \right|\phi_i(r) \right\rangle=0,
+\end{equation}
+由于 $\delta\phi_i(r)$ 任意，所以方程右半部分恒为零，得到有效势的单电子方程：
+\begin{equation}
+\left.\left.\left\{\hat{h}_i+\sum_{j(\ne i)}\langle\phi_j(r')|\frac{1}{|r-r'|}|\phi_j(r') \rangle-E_i \right\} \right|\phi_i(r) \right\rangle=0,
+\end{equation}
+整理得到 Hartree 方程：
+\begin{equation}
+\left(-\frac{1}{2}\nabla_i^2+\hat{v}_i+\hat{g}_i \right)|\phi_i(r)\rangle=E_i|\phi_i(r)\rangle,
+\end{equation}
+其中 $\hat{g}_i$ 常称为 Coulomb 项或 Hartree 项：
+\begin{equation}
+\hat{g}_i(r)=\sum_{j(\ne i)}\int\mathrm d r'\frac{|\phi_j(r')|^2}{|r-r'|}.
+\end{equation}
+需要对方程作自洽计算，迭代计算上两式中的 $|\phi_i(r)\rangle$ 和 $\hat{g}_i$ 。这样就将多电子问题化为了单电子问题。
+
+然而，1930 年，Slater 和 Fock 分别独立指出， Hartree 方法不能满足费米子波函数的反对称性，从而无法考虑 Pauli 不相容原理\cite{PhysRev.35.210.2, Fock1930}。
+\section{哈特利-福克方法}
+在 1935 年，Hartree 在之前的方法和 Fock 的方法的基础上，重新构造了更合适的算法来处理量子多体计算问题，利用满足交换反称的 Slater 总波函数替代了 Hartree 近似的波函数，这被称为哈特利-福克（Hartree-Fock）方法\cite{Hartree1935}。这样， Pauli 不相容原理就被自然地引入到了波函数基底中：
+\begin{equation}
+\Psi(r_1,r_2,\cdots,r_N)=\frac{1}{\sqrt{N!}}
+\left|
+\begin{array}{ccccc} 
+    \phi_1(r_1)  &  \phi_2(r_1)   & \cdots & \phi_N(r_1) \\ 
+   \phi_1(r_2)  &  \phi_2(r_2)   & \cdots & \phi_N(r_2)\\ 
+    \vdots  &  \vdots   &\vdots &\vdots\\
+    \phi_1(r_N) &\phi_2(r_N)&\cdots&\phi_N(r_N)
+\end{array}
+\right| .
+\end{equation}
+变分方法同上 Hatree 方法，得到 Hatree-Fock 本征方程：
+\begin{equation}
+\hat{f}(r_1)\phi_i(r_1)=\epsilon_i\phi_i(r_1),
+\end{equation}
+其中 $\hat{f}(r_1)$ 是 Fock 算符：
+\begin{equation}
+\hat{f}(r_1)=\hat{h}(r_1)+\sum_{a}\left[\hat{J}_a(r_1)-\hat{K}_a(r_1) \right],
+\end{equation}
+其中单粒子算符项 $\hat{h}(r_1)$ 定义与上一问相同，库仑算符 $\hat{J}_a(r_1)$ 定义为：
+\begin{equation}
+\begin{aligned}
+\hat{J}_a(r_1)\phi_b(r_1)=&\phi_b(r_1)\int|\phi_a(r_2)|^2\frac{1}{|r_1-r_2|}\mathrm d r_2\\
+=&\phi_b(r_1)\int\rho_a(r_2)\frac{1}{|r_1-r_2|}\mathrm d r_2,
+\end{aligned}
+\end{equation}
+交换算符 $\hat{K}_a(r_1)$ 定义为：
+\begin{equation}
+\hat{K}_a(r_1)\phi_b(r_1)=\phi_a(r_1)\int\phi_a^*(r_2)\phi_b(r_2)\frac{1}{|r_1-r_2|}\mathrm{d} r_2.
+\end{equation}
+对非相互作用体系，$N$ 个电子的每一个满足同样的薛定谔方程，处于平等地位，解单粒子方程可以得到足够多的单粒子态，所有 $N$ 个电子按照能级逐次填充这些单粒子。
+
+在 Hartree-Fock 近似下，体系的总能可以表示为
+\begin{equation}
+E_{\mathrm{HF}}=\sum_i^N H_i+\frac{1}{2}\sum_{i,j}^N(J_{ij}-K_{ij}),
+\end{equation}
+电子轨道能量是：
+\begin{equation}
+\langle\phi_a|\hat f_a|\phi_a\rangle=\epsilon_a.
+\end{equation}
+总能量可以表示成：
+\begin{equation}
+\begin{aligned}
+E_{\mathrm{HF}}=&\sum_{i=1}^NH_i+\frac{1}{2}\sum_{ij}^N(J_{ij}-K_{ij})\\
+=&\sum_i\epsilon_i-\sum_{ij}(J_{ij}-K_{ij})+\frac{1}{2}\sum_{ij}^N(J_{ij}-K_{ij})\\
+=&\sum_i\epsilon_i-\frac{1}{2}\sum_{ij}(J_{ij}-K_{ij}),
+\end{aligned}
+\end{equation}
+可见，HF 总能量不是单粒子轨道能量之和。Koopmans 定理表明，在这一近似下，电子轨道能量应等于电子离化能。
+
+Hartree-Fock 近似使得多电子问题变得能够求解。但直到 1950 年电子计算机被发明出来之前，这一方法所需要的计算资源都远超出当时的计算水平。因此当时 Hartree-Fock 方法只能应用于带有球对称性的原子系统\cite{PhysRev.81.385}。
+
+由于 Hartree 方法和 Hartree-Fock 方法都采用了平均场近似，忽略了电子关联，因此在相互作用电子系统中，计算结果将存在较大偏差。针对这一问题的修正统称为 Post Hartree-Fock 方法，包括 Møller–Plesset （MP）微扰理论\cite{PhysRev.46.618}、组态相互作用（Configuration Interaction, CI）修正\cite{DAVIDSHERRILL1999143}等方法。
+
+在 Hartree-Fock 方法发展起来的同时，人们还发展出了密度泛函理论（Density Functional Theory, DFT），这是 Hartree-Fock 方法的另一种替代方案，它将电子密度作为处理多体问题的最基本变量。在 DFT 计算框架下人们能够同时处理交换能和关联能。在强关联电子计算中，人们通常倾向于从 DFT 计算出发，在此基础上利用 DFT+U、DFT+DMFT 等方法进一步考虑电子关联。下一小节将具体介绍密度泛函理论的发展和基本框架。
