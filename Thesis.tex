@@ -79,14 +79,14 @@
 \newcommand{\pt}{\partial}
 \newcommand{\hoeff}{H_{o}^{\fun{eff}}}
 
-\input{Tex/Frontinfo}%
+% \input{Tex/Frontinfo}%
 \begin{document}
 %-
 %-> Frontmatter: title page, abstract, content list, symbol list, preface
 %-
 
 \frontmatter% initialize the environment
-\input{Tex/Frontmatter}% title page, abstract
+% \input{Tex/Frontmatter}% title page, abstract
 % \fancypagestyle{figureheader}{
 %   \fancyhf{}
 %   \fancyhead[C]{\footnotesize 图表目录}%此处填写中文标题
@@ -124,14 +124,14 @@
 \artxifstreq{\artxbib}{bibtex}{% enable bibtex
     \bibliography{Biblio/ref}% bibliography
 }{%
-    \printbibliography% bibliography
+    % \printbibliography% bibliography
 }
 \cleardoublepage%
 % \appendix% initialize the environment
 % \input{Tex/Appendix}% appendix content
-\addcontentsline{toc}{chapter}{学生签名}
-\addcontentsline{toc}{chapter}{导师评语}
-\includepdf{Img/Signature.pdf}
+% \addcontentsline{toc}{chapter}{学生签名}
+% \addcontentsline{toc}{chapter}{导师评语}
+% \includepdf{Img/Signature.pdf}
 % \fancypagestyle{appendixheader}{
 %   \fancyhf{}
 %   % \fancyhead[C]{\footnotesize 附录}%此处填写中文标题
@@ -141,7 +141,7 @@
 % }
 % \thispagestyle{appendixheader}
 
-\backmatter% initialize the environment
+% \backmatter% initialize the environment
 % \input{Tex/Backmatter}% other information
 \end{document}
 %---------------------------------------------------------------------------%
