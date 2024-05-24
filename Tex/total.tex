@@ -1,0 +1,140 @@
+动力学平均场理论（Dynamical Mean Field Theory, DMFT）是一种处理强关联电子体系的近似方法，将难以求解的晶格问题转化成量子杂质问题，从而有效降低多体问题的自由度。在处理量子杂质模型时，由于杂质哈密顿量并不会因为晶格模型的不同类型而发生较大变化，因此这一方法的优势是可以处理不同的晶格问题，进一步能够与真实的材料体系计算相结合，很大程度上扩展了强关联材料的计算领域。利用 DMFT 方法的这一优势，并进一步将这套技术推广到非平衡体系，人们就能够在热力学极限下直接处理时间域的量子涨落。在此框架下，人们更好地理解许多非平衡体系的物理性质，例如莫特绝缘体中的介电击穿，光掺杂以及淬火系统中的崩溃和复苏振荡(collapse-and-revival oscillations)等。本篇读书报告主要参考 RMP 86,779(2014) 和 RMP 68,13(1996) 两篇综述，简要介绍非平衡 DMFT 的理论框架。
+
+在处理晶格系统的电子相互作用时，最简单的方法是做平均场近似。但这种方法得到的是静态的库仑势，电子因此只能形成静态的长程序，时间关联的电子涨落无法得到很好描述，因此人们无法得到例如 Mott 绝缘性相关的强关联物理图像。但因为 DMFT 方法处理的不是电子密度，而是与频率依赖的格林函数 $G(\omega)$，因此它能够自然地将时间涨落相关信息包括进来。DMFT 的核心思想是将晶格模型自洽地映射为单杂质模型，从而把物理问题等效地转化成对单杂质的求解问题。非平衡 DMFT 是对平衡态理论框架的一个直接推广，利用双时格林函数和相应的时间依赖的 Weiss 场自洽地描述系统的有效作用量。下面从平衡态出发，对这一方法做简要推导。
+
+为了将晶格模型的性质映射到单杂质模型中，一个直接的方式是扣除晶格模型的一个格点，利用路径积分将其他格点积分掉，得到与单杂质模型数学形式相同的有效作用量。文献中一般称这种推导方法为空腔法（cavity method）。
+
+Hubbard 模型的哈密顿量为
+\begin{equation}
+    \hat{H}=-\sum_{ij\sigma}t_{ij}^{ }c_{i\sigma}^\dg c_{j\sigma}^{ }+U\sum_i n_{i\ua} n_{i\da},
+\end{equation}
+其中, 设 $t_{ii}=0$, $t_{ij}=t_{ji}\in \mathbb{R}$。
+
+在相干态路径积分下, 有配分函数 
+\begin{equation}
+    Z=\int\prod_{i}\prod_\sigma \mathcal{D}c_{i\sigma}^*(\tau)\mathcal{D}c_{j\sigma}^{ }(\tau)\e^{-S},
+\end{equation}
+其中作用量的表达式为
+\begin{equation}
+    S=\int_0^\infty\dd\tau\lmi \sum_{i\sigma}c_{i\sigma}^*(\tau)\ls \frac{\pt}{\pt \tau}-\mu \rs c_{i\sigma}(\tau)-\sum_{ij}\sum_\sigma t_{ij}c_{i\sigma}^*(\tau)c_{j\sigma}^{ }(\tau)+U\sum_i n_{i\ua}(\tau)n_{i\da}(\tau) \rmi,
+\end{equation}
+将作用量划分为空腔 $o$ 格点项 $S_o$, 剩余格点项 $S^{(o)}$ 以及相互作用项 $\Delta S$, 其中 
+\begin{equation}
+    S_o=\int_0^\beta\dd\tau\lmi \sum_\sigma c_{o\sigma}^*(\tau)\ls \frac{\pt}{\pt \tau}-\mu \rs c_{o\sigma}^{ }(\tau)+Un_{o\ua}(\tau)n_{o\da}(\tau) \rmi,
+\end{equation}
+\begin{equation}
+    \Delta S=-\int_0^\beta \dd\tau\sum_{i\sigma}t_{io}\lmi c_{i\sigma}^*(\tau)c_{o\sigma}^{ }(\tau)+c_{o\sigma}^*(\tau)c_{i\sigma}^{ }(\tau) \rmi.
+\end{equation}
+记 $\eta_{i\sigma}(\tau)\equiv t_{io}c_{o\sigma}(\tau)$, 并对 $t_{ij}$ 作标度变换:
+\begin{equation}
+    t_{ij}=\frac{\tilde{t}_{ij}}{D^{\frac{|i-j|}{2}}}.
+\end{equation}
+D. Vollhardt 证明, 这样的取法可以在大维度极限 $D\to \infty$ 时得到有限的 $\lag H_T \rag$, 否则将发散或趋于零\cite{PhysRevLett.62.324}。
+
+定义空腔格点的有效作用量:
+\begin{equation}
+    \frac{1}{Z_{\fun{eff}}}\e^{-S_{\fun{eff}}}\equiv \frac{1}{Z}\int\prod_{i\ne o}\prod_{\sigma}\mathcal{D}c_{i\sigma}^*\mathcal{D}c_{i\sigma}^{ }\e^{-S},
+\end{equation}
+为方便表述, 令 $\eta_1^*,\cdots,\eta_{N}^*\equiv \eta_{N+1},\cdots,\eta_{2N}$, 视为和 $\eta_1,\cdots,\eta_{N}$ 相互独立的变量。利用 Grassmann 函数的泰勒展开式:
+\begin{equation}
+    \begin{aligned}
+        S_{\fun{eff}}(\eta_{1},\cdots,\eta_{2N})=&\int\dd\tau L_{\fun{eff}}\\
+        =&\int\dd\tau\sum_{n=0}^\infty\sum_{i_1\cdots i_n=1}^{2N}\frac{1}{n!}\left.\frac{\pt^n L_{\fun{eff}}}{\pt\eta_{i_1}\cdots\pt \eta_{i_n}}\right|_{\{\eta_1,\cdots,\eta_{2N}=0\}}\eta_{i_n}\cdots\eta_{i_1},
+    \end{aligned}
+\end{equation}
+利用 
+\begin{equation}
+    \frac{\pt \eta_{i\sigma}(\tau)}{\pt \eta_{j\sigma'}(\tau')}=\delta_{ij}\delta_{\sigma\sigma'}\delta(\tau-\tau')
+\end{equation}
+以及有效作用量的定义式, 可以计算各阶偏导数的表达式:
+\begin{equation}
+    \begin{aligned}
+        -\e^{-S_{\fun{eff}}}\int\dd\tau\frac{\pt L_{\fun{eff}}}{\pt \eta_{i_1\sigma}}&=\int\prod_{k\ne o}\prod_\sigma\mathcal{D}c_{k\sigma}^*\mathcal{D}c_{k\sigma}^{ }\e^{-S}\lmi -\int\dd\tau c_{i_1\sigma}^*\rmi\\
+        \Rightarrow \int\dd\tau\lmi \e^{-S_{\fun{eff}}}\frac{\pt L_{\fun{eff}}}{\pt \eta_{i_1}} \rmi &=\int\dd\tau\lmi \int\prod_{k\ne o}\prod_\sigma\mathcal{D}c_{k\sigma}^*\mathcal{D}c_{k\sigma}^{ }\e^{-S} c_{i_1\sigma}^* \rmi,
+    \end{aligned}
+\end{equation}
+从中得到 
+\begin{equation}
+    \begin{aligned}
+        \left.\frac{\pt L_{\fun{eff}}}{\pt \eta_{i_1}}\right|_{\{\eta_{1,\cdots,N},\eta_{1,\cdots,N}^*=0\}}=&\frac{\int\prod_{k\ne o}\prod_{\sigma}\mathcal{D}c_{k\sigma}^*\mathcal{D} c_{k\sigma}^{ }\e^{-S^{(o)}}c_{i_1\sigma}^*}{\int\prod_{k\ne o}\prod_{\sigma}\mathcal{D}c_{k\sigma}^*\mathcal{D} c_{k\sigma}^{ }\e^{-S^{(o)}}}\\
+        =&\lag c^*_{i_1\sigma}(\tau_{i_1}) \rag^{(o)},
+    \end{aligned}
+\end{equation}
+但是奇数阶 Grassmann 变量的期望值都是 0, 所以这里得到的一阶导为零。再求一次导, 得到 
+\begin{equation}
+    \begin{aligned}
+        \left.\frac{\pt^2 L_{\fun{eff}}}{\pt \eta_{i_1}^{ }\pt \eta_{j_1}^*}\right|_{\{\eta_{1,\cdots,N},\eta_{1,\cdots,N}^*=0\}}&=-\left.\frac{\pt^2 L_{\fun{eff}}}{\pt \eta_{i_1}^{*}\pt \eta_{j_1}^{ }}\right|_{\{\eta_{1,\cdots,N},\eta_{1,\cdots,N}^*=0\}}\\
+        &=- \lag c_{j_1\sigma}^{ }(\tau_{j_1})c_{i_1\sigma}^*(\tau_{i_1}) \rag^{(o)}\\
+        &=-G^{(o)}(\tau_{j_1},\tau_{i_1}).
+    \end{aligned}
+\end{equation}
+同理, 应有
+\begin{equation}
+    \left.\frac{\pt^{2n}L_{\fun{eff}}}{\pt\eta_{j_1\sigma}^*\cdots\pt\eta_{j_n}^*\pt \eta_{i_1}^{ }\cdots\pt \eta_{i_n}^{ }}\right|_{\{\eta_{1,\cdots,N},\eta_{1,\cdots,N}^*=0\}}=(-1)^nG^{(o)}(\tau_{j_1}\cdots\tau_{j_n},\tau_{i_1}\cdots\tau_{i_n}).
+\end{equation}
+在 Taylor 展开式中, 首先, 只考虑 $\eta\eta^*$ 耦合, 不考虑 $\eta\eta$ 和 $\eta^*\eta$ 耦合, 其次, $2n$ 个 Grassmann 变量换序时会产生符号变化 $(-1)^n$ 与上式的符号抵消, 最后, 对应每一阶 $n$, 确定了 $i_1,\cdots,i_n,j_1,\cdots,j_n$ 的取值后, 应有 $n!$ 种排列组合方式, 写成正规形式后可以合并为一项。这样, 展开式可以表示为
+\begin{equation}
+    \begin{aligned}
+        S_{\fun{eff}}=&\sum_{n=0}^\infty \sum_{\lag i_1,\cdots,i_n=1 \rag}^N\sum_{\lag j_1,\cdots,j_n=1 \rag}^N\int \left.\frac{\pt^{2n} L_{\fun{eff}}}{\pt \eta_{i_1}^{ }\cdots\pt\eta_{i_n}^{ }\pt \eta_{j_1}^*\cdots\pt\eta_{j_n}^*}\right|_{\{\eta_1^{ },\cdots,\eta_N^*=0\}}\eta_{j_n}^*\cdots\eta_{j_1}^*\eta_{i_n}\cdots\eta_{i_1}\\
+        =&\sum_{n=1}^\infty \sum_{i_1\cdots j_n}\int\eta_{i_1}^*(\tau_{i_1})\cdots \eta_{i_n}^*(\tau_{i_n})\eta_{j_1}(\tau_{j_1})\cdots \eta_{j_n}(\tau_{j_n})G_{i_1\cdots j_n}^{(o)}(\tau_{i_1}\cdots \tau_{i_n},\tau_{j_1}\cdots \tau_{j_n})+S_o+\fun{const.}
+    \end{aligned}
+\end{equation} 
+其中, 忽略了 $\eta_{i\sigma}(\tau)$ 的自旋指标和对 $\tau$ 的依赖关系。此即综述中 (34) 式。在大维度极限 $D\to \infty$ 下, 可以证明, 各阶展开中, 只有 $n=1$ 项保留下来, 其他高阶项快速衰减。于是有效作用量可以简化为 
+ \begin{equation}
+    S_{\fun{eff}}=S_o+\int_0^\beta\dd\tau\int_0^\beta\dd\tau'\sum_\sigma c_{i\sigma}^*(\tau)\lmi \sum_{ij}t_{oi}t_{oj}G_{ij}^{(o)}(\tau-\tau') \rmi c_{o\sigma}^{ }(\tau'),
+ \end{equation}
+中括号内的表达式被称为动力学平均场。整个积分式描写了周围格点对 $o$ 格点的影响。另外, $S_o$ 的表达式为 
+\begin{equation}
+    S_o=\int_0^\beta\dd\tau\sum_\sigma\lmi c_{o\sigma}^*(\tau)\ls \frac{\pt}{\pt \tau}-\mu \rs c_{o\sigma}^{ }(\tau) \rmi+\int_0^\beta\dd\tau\lmi U n_{o\ua}(\tau)n_{o\da}(\tau) \rmi.
+\end{equation} 
+由单杂质安德森模型 
+\begin{equation}
+    H_{\fun{SAIM}}=\epsilon_d\sum_\sigma d_\sigma^\dg d_\sigma^{ }+\sum_{k\sigma}\lmi \epsilon_k c_{k\sigma}^{\dg} c_{k\sigma}^{ }+V_k\ls d_\sigma^\dg c_{k\sigma}^{ }+c_{k\sigma}^\dg d_\sigma^{ } \rs \rmi+U n_{\ua}^d n_{\da}^d, 
+\end{equation}
+对应的杂质作用量为 
+\begin{equation}
+    S_{\fun{imp}}[d_\sigma^*,d_\sigma^{ }]=\int_0^\beta\dd\tau\int_0^\beta\dd\tau'd_\sigma^*(\tau)\lmi -\mathcal{G}^{-1}_0(\tau-\tau') \rmi d_{\sigma}(\tau')+U\int_0^\beta\dd\tau n_{\ua}^d(\tau)n_{\da}^d(\tau).
+\end{equation}
+上面得到的 $S_{\fun{eff}}$ 可以写成类似的形式, 即
+\begin{equation}
+    \begin{aligned}
+        S_{\fun{eff}}=&\int_0^\beta\dd\tau \int_0^\beta\dd\tau'\sum_\sigma c_{o\sigma}^*(\tau)\lmi \ls \frac{\pt}{\pt \tau}-\mu \rs\delta(\tau-\tau')+\sum_{ij}t_{oi}t_{oj}G_{ij}^{(o)}(\tau-\tau') \rmi c_{o\sigma}(\tau')\\
+        & +\int_0^\beta\dd\tau Un_{o\ua}(\tau)n_{o\da}(\tau)\\
+        =&\int_0^\beta\dd\tau \int_0^\beta\dd\tau'\sum_\sigma c_{o\sigma}^*(\tau)\lmi \delta^{(1)}(\tau-\tau')-\mu\delta(\tau-\tau') +\sum_{ij}t_{oi}t_{oj}G_{ij}^{(o)}(\tau-\tau') \rmi c_{o\sigma}(\tau')\\
+        &+\int_0^\beta\dd\tau Un_{o\ua}(\tau)n_{o\da}(\tau),
+    \end{aligned}
+\end{equation}
+对比两式, 得到 
+\begin{equation}
+    \mathcal{G}_0^{-1}(\tau-\tau')=\delta^{(1)}(\tau-\tau')-\mu\delta(\tau-\tau') +\sum_{ij}t_{oi}t_{oj}G_{ij}^{(o)}(\tau-\tau'),
+\end{equation}
+人们一般也将这里的无库仑相互作用格林函数 $\mathcal{G}_0$ 称为 Weiss 场。这样就将晶格模型映射为了杂质模型。
+
+在一般情况下，格点自能应该是动量依赖的，但在无穷维极限下，格点自能是对角的。在这种近似下，格点自能函数就等于空腔的自能函数，没有动量依赖\cite{Hartmann1989}。此外，为了自洽地将晶格模型映射到杂质模型，要求两个体系的格点可观测量和相互作用项都对应相等，也就是要求两个体系的自能函数相同，因此就得到杂质自能等于空腔自能，即 
+\begin{equation}
+    \Sigma_{\fun{imp}}(\tau-\tau')=\Sigma_{oo}(\tau-\tau').\label{dmftscf1}
+\end{equation}
+上式等价于
+\begin{equation}
+    G_{\fun{imp}}(\tau-\tau')=G_{oo}(\tau-\tau').\label{dmftscf2}
+\end{equation}
+
+利用杂质模型的 Dyson 方程，可以得到 
+\begin{equation}
+    G_{\fun{imp}}(\ii\omega_n)=\lb \mathcal{G}_0^{-1}(\ii\omega_n)-\Sigma_{\fun{imp}}(\ii\omega_n) \rb^{-1},\label{dmftscf3}
+\end{equation}
+
+另外，在 $D=\infty$ 极限下，晶格模型的格林函数具有下面的关系式\cite{PhysRevB.77.235106} 
+\begin{equation}
+    G_{ij}^{(o)}(\ii\omega_n)=G_{ij}(\ii\omega_n)-\frac{G_{io}(\ii\omega_n)G_{oj}(\ii\omega_n)}{G_{oo}(\ii\omega_n)},\label{lattice-G}
+\end{equation}
+
+以上四式已构成封闭方程组。在实际计算中，人们还需要作进一步简化处理，在此暂时不加赘述。
+
+
+以上是在平衡态体系下推导出的DMFT自洽方程。非平衡体系的 DMFT 可以看作在此基础上的一个推广，形式上与平衡态类似，所有的格林函数和自能都表示为双时格林函数。与平衡态对应的杂质自能为 
+\begin{equation}
+    \Sigma_{\fun{imp}}(t, t')=\Sigma_{oo}(t,t'),
+\end{equation}
+
+但非平衡框架下的 DMFT 自洽方程组具有完全不同的物理意义：
