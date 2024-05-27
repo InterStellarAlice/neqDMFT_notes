@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2022.2.27)  24 MAY 2024 23:06
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2022.2.27)  26 MAY 2024 23:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1508,45 +1508,6 @@ LaTeX Info: Redefining \nameref on input line 83.
 \openout4 = `Thesis.out'.
 
  (./Tex/Mainmatter.tex (./Tex/total.tex
-LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 12.04628pt on input line 3.
-LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 9.03471pt on input line 3.
-LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
-(Font)              scaled to size 7.22777pt on input line 3.
-LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 12.0437pt on input line 3.
-LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 9.03278pt on input line 3.
-LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
-(Font)              scaled to size 7.22623pt on input line 3.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 3.
- (d:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 3.
- (d:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-Overfull \hbox (9.37498pt too wide) detected at line 20
-[][][][] [] [][] [][] [] []
- []
-
-[1
-
-
-
-] [2]
-Overfull \hbox (39.60637pt too wide) detected at line 81
-[][][][][]
- []
-
-[3]
-Overfull \hbox (24.96793pt too wide) detected at line 106
-[][][][][]
- []
-
-[4])) [5] (./Thesis.bbl
 
 Package fontspec Info: Could not resolve font "SimHei/I" (it probably doesn't
 (fontspec)             exist).
@@ -1574,6 +1535,46 @@ Package fontspec Info: Font family 'SimHei(0)' created for font 'SimHei' with
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 12.04628pt on input line 4.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 9.03471pt on input line 4.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 7.22777pt on input line 4.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 12.0437pt on input line 4.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 9.03278pt on input line 4.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 7.22623pt on input line 4.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 4.
+ (d:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 4.
+ (d:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Overfull \hbox (9.37498pt too wide) detected at line 23
+[][][][] [] [][] [][] [] []
+ []
+
+[1
+
+
+
+
+] [2]
+Overfull \hbox (39.60637pt too wide) detected at line 84
+[][][][][]
+ []
+
+
+Overfull \hbox (24.96793pt too wide) detected at line 109
+[][][][][]
+ []
+
+[3] [4])) [5] (./Thesis.bbl
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
 (Font)              scaled to size 10.54048pt on input line 18.
 LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
 (Font)              scaled to size 7.00075pt on input line 18.
@@ -1590,14 +1591,23 @@ LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
 
 
 ] (./Thesis.aux)
-Package rerunfilecheck Info: File `Thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 0A2D8456997753D1592689B0959C9192;76.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `Thesis.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `Thesis.out':
+(rerunfilecheck)             Before: 46562BF71DE34896A234C8F948D460F8;76
+(rerunfilecheck)             After:  A1849D5A40C54C583F33A52C9629A776;76.
  ) 
 Here is how much of TeX's memory you used:
- 39773 strings out of 476180
- 794950 string characters out of 5813082
- 1229166 words of memory out of 5000000
- 59828 multiletter control sequences out of 15000+600000
+ 39795 strings out of 476180
+ 796413 string characters out of 5813082
+ 1232166 words of memory out of 5000000
+ 59850 multiletter control sequences out of 15000+600000
  477877 words of font info for 116 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  118i,12n,130p,1225b,2933s stack positions out of 5000i,500n,10000p,200000b,80000s
